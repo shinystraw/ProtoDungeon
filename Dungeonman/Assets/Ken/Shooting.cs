@@ -9,14 +9,15 @@ public class Shooting : MonoBehaviour
     private Camera cam;
     private Vector2 mousePos;
     private Vector2 rotation;
-    [SerializeField] Transform player;
+    [SerializeField] Transform rotationPoint;
     [SerializeField] Transform firePoint;
     [SerializeField] GameObject bulletPrefab;
-    [SerializeField] GameObject muzzleFLashPrefab;
     [SerializeField] float fireRate = 0.5f;
+    [SerializeField] int ammo;
     private float nextFire = 0;
     public float bulletForce = 250f;
     bool shoot = false;
+    bool throwGun = false;
 
     private void Awake()
     {
@@ -26,6 +27,11 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (throwGun == true)
+        {
+            return;
+        }
+
         MouseAiming();
 
         if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
@@ -34,43 +40,52 @@ public class Shooting : MonoBehaviour
             shoot = true;
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+        }
     }
 
     private void FixedUpdate()
     {
-        if (shoot)
+        if (shoot && ammo > 0)
         {
             ShootProjectile();
+            ammo--;
             shoot = false;
         }
     }
 
-    // disables shooting while crouching
-    public void DisableWhileCrouch(bool isCrouching)
-    {
-        gameObject.SetActive(!isCrouching);
-    } 
-
-    //logic for mouse aiming
+    //Logiikka jolla ase pyörii hiiren suntaan
     void MouseAiming()
     {
-        transform.position = player.position;
-
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        rotation = mousePos - (Vector2)transform.position;
+        rotation = mousePos - (Vector2)rotationPoint.position;
 
         float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(0, 0, rotZ);
+        rotationPoint.rotation = Quaternion.Euler(0, 0, rotZ);
     }
 
     void ShootProjectile()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Instantiate(muzzleFLashPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.right * bulletForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
+
+    //void ThrowWeapon()
+    //{
+    //    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+    //    rb.AddForce(firePoint.right * bulletForce * Time.deltaTime, ForceMode2D.Impulse);
+    //    Destroy(gameObject, 4f);
+    //    Destroy(gameObject, 4f);
+    //    // event remove from inventory the shit later.
+    //}
+
+    public string CurrentAmmo()
+    {
+        return ammo.ToString();
+    }
+
 }
