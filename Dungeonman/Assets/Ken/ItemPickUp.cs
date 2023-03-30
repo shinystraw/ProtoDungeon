@@ -31,7 +31,8 @@ public class ItemPickUp : MonoBehaviour
         {
             if (item.gameObject.layer == 8)
             {
-
+                Destroy(item.gameObject);
+                GameObject.FindGameObjectWithTag("Gun").SetActive(true);
             }
         }
     }

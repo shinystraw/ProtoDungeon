@@ -14,6 +14,7 @@ public class Shooting : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] int ammo;
+    private int currentAmmo;
     private float nextFire = 0;
     public float bulletForce = 250f;
     bool shoot = false;
@@ -22,6 +23,7 @@ public class Shooting : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
+        currentAmmo = ammo;
     }
 
     // Update is called once per frame
@@ -42,12 +44,14 @@ public class Shooting : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+            currentAmmo = ammo;
+            gameObject.SetActive(false);
         }
     }
 
     private void FixedUpdate()
     {
-        if (shoot && ammo > 0)
+        if (shoot && currentAmmo > 0)
         {
             ShootProjectile();
             ammo--;
