@@ -8,12 +8,7 @@ public class ItemPickUp : MonoBehaviour
     [SerializeField] Transform pickupPoint;
     [SerializeField] float pickupRange;
     [SerializeField] LayerMask itemLayer;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject GunPrefab;
 
     // Update is called once per frame
     void Update()
@@ -32,7 +27,7 @@ public class ItemPickUp : MonoBehaviour
             if (item.gameObject.layer == 8)
             {
                 Destroy(item.gameObject);
-                GameObject.FindGameObjectWithTag("Gun").SetActive(true);
+                Instantiate(GunPrefab);
             }
         }
     }

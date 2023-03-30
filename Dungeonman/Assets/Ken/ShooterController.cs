@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class Shooting : MonoBehaviour
+public class ShooterController : MonoBehaviour
 {
     private Camera cam;
     private Vector2 mousePos;
     private Vector2 rotation;
-    [SerializeField] Transform rotationPoint;
+    Transform rotationPoint;
     [SerializeField] Transform firePoint;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float fireRate = 0.5f;
@@ -19,21 +19,24 @@ public class Shooting : MonoBehaviour
     public float bulletForce = 250f;
     bool shoot = false;
     bool throwGun = false;
+    Vector3 offset = new Vector3(1.5f,0,0); 
 
     private void Awake()
     {
         cam = Camera.main;
-        currentAmmo = ammo;
+    }
+
+    private void Start()
+    {
+        rotationPoint = GameObject.FindGameObjectWithTag("Equip").transform;
+        rotationPoint.rotation = Quaternion.Euler(0, 0, 0);
+        gameObject.transform.SetParent(rotationPoint);
+        transform.position = rotationPoint.position + offset;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (throwGun == true)
-        {
-            return;
-        }
-
         MouseAiming();
 
         if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
@@ -44,14 +47,13 @@ public class Shooting : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            currentAmmo = ammo;
-            gameObject.SetActive(false);
+            Destroy(gameObject); 
         }
     }
 
     private void FixedUpdate()
     {
-        if (shoot && currentAmmo > 0)
+        if (shoot && ammo > 0)
         {
             ShootProjectile();
             ammo--;
@@ -77,15 +79,6 @@ public class Shooting : MonoBehaviour
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.right * bulletForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
-
-    //void ThrowWeapon()
-    //{
-    //    Rigidbody2D rb = GetComponent<Rigidbody2D>();
-    //    rb.AddForce(firePoint.right * bulletForce * Time.deltaTime, ForceMode2D.Impulse);
-    //    Destroy(gameObject, 4f);
-    //    Destroy(gameObject, 4f);
-    //    // event remove from inventory the shit later.
-    //}
 
     public string CurrentAmmo()
     {
