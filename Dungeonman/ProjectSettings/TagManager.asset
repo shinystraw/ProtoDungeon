@@ -5,16 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - Solid
+  - Gun
+  - Equip
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Enemy
+  - Item
+  - Weapon
   - 
   - 
   - 
