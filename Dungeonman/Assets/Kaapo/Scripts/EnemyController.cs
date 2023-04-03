@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour
     private Vector2[] pathPoints; //set of points the enemy follows, amount of points tells enemies follow distance
     public float movementSpeed; //speed at which the enemy moves
     private Vector2 idleCheckFrequency = new Vector2(1f,3f); //frequency at which enemy checks if player is visible while in idle mode
-    private Vector2 pathingCheckFrequency = new Vector2(5f,10f); //frequency at which enemy checks if player is visible while chasing
+    private Vector2 pathingCheckFrequency = new Vector2(10f,20f); //frequency at which enemy checks if player is visible while chasing
     #endregion
 
     #region Dynamic Variables
@@ -100,7 +100,7 @@ public class EnemyController : MonoBehaviour
                 pointsMade++; //add to the point count
                 playerLost = !playerLost;
             }
-            pathPoints[0 + pointsMade] = collision.point + collision.normal + new Vector2(collision.normal.y * Random.Range(-1f, 1f), collision.normal.x * Random.Range(-1f, 1f)); //add this path point to the last place the player was seen
+            pathPoints[0 + pointsMade] = collision.point + collision.normal + new Vector2(collision.normal.y * Random.Range(-0.1f, 0.1f), collision.normal.x * Random.Range(-0.1f, 0.1f)); //add this path point to the last place the player was seen
         }
         #endregion
 
