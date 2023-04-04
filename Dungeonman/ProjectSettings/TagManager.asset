@@ -7,6 +7,7 @@ TagManager:
   - Solid
   - Gun
   - Equip
+  - Keycard
   layers:
   - Default
   - TransparentFX
