@@ -102,7 +102,7 @@ public class DoorScript : MonoBehaviour
     void Update()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player"); //get info from player
-        if (Vector2.Distance(transform.position, player.transform.position) < 1f) //if player is in range
+        if (Vector2.Distance(transform.position, player.transform.position) < 1.5f) //if player is in range
         {
             GameObject[] keycards = GameObject.FindGameObjectsWithTag("Keycard"); //make array of all the existing cards
             foreach (GameObject keycard in keycards) //check every existing card

@@ -49,8 +49,8 @@ Shader "Custom/ShadowShader"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                _CircleSize = 0.25; //Size of outer circle (0.25 is max size)
-                _GradientIntensity = 32; //Intensity of shadowing effect
+                _CircleSize = 0.15; //Size of outer circle (0.25 is max size)
+                _GradientIntensity = 64; //Intensity of shadowing effect
 
                 fixed4 col = tex2D(_MainTex, i.uv);
                 col = fixed4(0,0,0,1); //basic color of shader is black

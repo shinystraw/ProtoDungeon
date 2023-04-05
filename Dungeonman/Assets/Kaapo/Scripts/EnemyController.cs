@@ -27,16 +27,21 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        #region Initializations
         pathPoints = new Vector2[20]; //path max size, follow player only this amount of points
         movementSpeed = 0.5f; //add enemy speed
         StartCoroutine(modeCheck()); //check if mode change is ok
+        #endregion
     }
 
     void Update()
     {
+        #region Update Player Data and My Current Position
         player = GameObject.FindGameObjectWithTag("Player"); //update player status
         pathPoints[0] = new Vector2(transform.position.x, transform.position.y); //keep first path point as my position
+        #endregion
 
+        #region Movement Modes
         switch (movementMode)
         {
             case 1: //in movement mode 1 enemy chases player
@@ -47,6 +52,7 @@ public class EnemyController : MonoBehaviour
                 Idle();
                 break;
         }
+        #endregion
     }
 
     #region Mode Checking
@@ -139,30 +145,3 @@ public class EnemyController : MonoBehaviour
     }
     #endregion
 }
-/*
-Idle(); //go to idle movement
-
-}
-
-IEnumerator modeCheck()
-{
-yield return new WaitForSeconds(Random.Range(1f,10f)); //spawn enemy once timer runs out
-idleDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
-StartCoroutine(modeCheck()); //check if mode change is ok
-}
-
-void Idle()
-{
-RaycastHit2D collision = Physics2D.Raycast(pathPoints[0], new Vector2(player.transform.position.x, player.transform.position.y) - pathPoints[0]); //keep checking visibility to player
-if (collision.collider == null || collision.distance > Vector2.Distance(pathPoints[0], player.transform.position)) //if player is seen
-{
-    Debug.DrawRay(pathPoints[0], new Vector2(player.transform.position.x, player.transform.position.y) - pathPoints[0], Color.blue); //debug enemy vision (points towards player)
-}
-else //if player is not seen
-{
-    currentDirection.x = idleDirection.x * 1 / (1 + Mathf.Pow(currentDirection.x, 2)*100);
-    currentDirection.y = idleDirection.y * 1 / (1 + Mathf.Pow(currentDirection.y, 2)*100);
-    transform.position = new Vector3(transform.position.x + currentDirection.x * Time.deltaTime, transform.position.y + currentDirection.y * Time.deltaTime, 0);
-}
-}
-*/
