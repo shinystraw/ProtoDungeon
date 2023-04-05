@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class ShooterController : MonoBehaviour
+public abstract class ShooterController : MonoBehaviour
 {
     private Camera cam;
     private Vector2 mousePos;
     private Vector2 rotation;
     Transform rotationPoint;
-    [SerializeField] Transform firePoint;
-    [SerializeField] GameObject bulletPrefab;
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] int ammo;
     private int currentAmmo;
@@ -47,7 +45,7 @@ public class ShooterController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Destroy(gameObject); 
+            ThrowGun();
         }
     }
 
@@ -73,12 +71,9 @@ public class ShooterController : MonoBehaviour
         rotationPoint.rotation = Quaternion.Euler(0, 0, rotZ);
     }
 
-    void ShootProjectile()
-    {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.AddForce(firePoint.right * bulletForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
-    }
+    protected abstract void ShootProjectile();
+
+    protected abstract void ThrowGun();
 
     public string CurrentAmmo()
     {

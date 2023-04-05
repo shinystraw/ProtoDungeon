@@ -21,6 +21,7 @@ public class ItemPickUp : MonoBehaviour
 
     void PickUp()
     {
+
         Collider2D[] hitbox = Physics2D.OverlapCircleAll(pickupPoint.position, pickupRange, itemLayer);
         foreach(Collider2D item in hitbox)
         {
