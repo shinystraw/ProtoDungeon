@@ -14,16 +14,17 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     public bool movementMode;
+    InputInhibitor inputMaster;
     void Start()
     {
-        
+        inputMaster = GetComponent<InputInhibitor>();
     }
 
     void Update()
     {
         #region Player Movements (move where body points)
-        float verticalInput = Input.GetAxisRaw("Vertical"); //get vertical input
-        float horizontalInput = Input.GetAxisRaw("Horizontal"); //get horizontal input
+        float verticalInput = inputMaster.GetVertical(); //get vertical input
+        float horizontalInput = inputMaster.GetHorizontal(); //get horizontal input
 
         if (movementMode == false)
         {
@@ -36,8 +37,7 @@ public class PlayerController : MonoBehaviour
         if (movementMode == true)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0); //lock rotation
-            //move directly in the direction of input at movementspeed
-            transform.position = new Vector3(transform.position.x + movementSpeed * horizontalInput * Time.deltaTime, transform.position.y + movementSpeed * verticalInput * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x + movementSpeed * horizontalInput * Time.deltaTime, transform.position.y + movementSpeed * verticalInput * Time.deltaTime); //move directly in the direction of input at movementspeed
         }
         #endregion
     }

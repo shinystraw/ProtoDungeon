@@ -9,6 +9,7 @@ public class TurretController : MonoBehaviour
     public float turnSpeed;
     public float spinUpTime;
     public float fireRate;
+    public Material laserMaterial;
     #endregion
 
     #region Functional Variables
@@ -36,6 +37,7 @@ public class TurretController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player"); //get info from player
         vertexPositions[0] = transform.position; //set first vertex to own position
         lineRenderer.SetPositions(vertexPositions); //render laser
+        lineRenderer.material = laserMaterial; //set laser material
 
         RaycastHit2D collision = Physics2D.Raycast(vertexPositions[0], transform.up); //check player visibility from current follow point
         if (collision.collider != null) //if collision is detected
