@@ -46,9 +46,10 @@ public class TurretController : MonoBehaviour
         for(int i = (int)Vector3.Distance(vertexPositions[0],vertexPositions[1]); i > 0; i--) //divide laser into equal length intervals
         {
             laserCheckPoint = vertexPositions[0] + (vertexPositions[1] - vertexPositions[0]) / Vector3.Distance(vertexPositions[0], vertexPositions[1]) * i; //an interval in laser length
-            if (Vector3.Distance(laserCheckPoint, player.transform.position) < 0.4f) //if player is in the range of the current laser interval
+            if (Vector3.Distance(laserCheckPoint, player.transform.position) < 0.5f) //if player is in the range of the current laser interval
             {
                 mode = true; //change mode to targeting
+                vertexPositions[1] = player.transform.position;
             }
             Debug.DrawRay(vertexPositions[0] + (vertexPositions[1] - vertexPositions[0])/Vector3.Distance(vertexPositions[0], vertexPositions [1]) * i, transform.right, Color.red);
         }
