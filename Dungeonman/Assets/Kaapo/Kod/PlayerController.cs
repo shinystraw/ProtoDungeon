@@ -8,8 +8,13 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 4; //movement speed in units per second
     public float sensitivity = 90; //sensitivity in degrees per second
     #endregion
-    Animator pAnimator;
-    bool pMoving;
+
+    public float verticalInput;
+    public float horizontalInput;
+
+    #region AnimatorController
+    Animator PlayerAnimator;
+    #endregion
 
     #region Dynamic Variables
 
@@ -18,8 +23,7 @@ public class PlayerController : MonoBehaviour
     public bool movementMode;
     void Start()
     {
-        pAnimator = gameObject.GetComponent<Animator>();
-        pMoving = false;
+        PlayerAnimator = gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -43,19 +47,7 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(transform.position.x + movementSpeed * horizontalInput * Time.deltaTime, transform.position.y + movementSpeed * verticalInput * Time.deltaTime);
         }
         #endregion
-        if (Input.GetKeyDown(KeyCode.R))
-            pMoving = true;
-        else
-            pMoving = false;
-
-
-        if (pMoving == true)
-            pAnimator.SetBool("PlayerMove", true);
-        Debug.Log("Bool is true");
-
-        if (pMoving == false)
-            pAnimator.SetBool("PlayerMove", false);
-        Debug.Log("Bool is false");
+        
 
     }
 }
